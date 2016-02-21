@@ -4,8 +4,8 @@ var pomoCurrentState = "atRest";
 var pomoWorkCompleted = false;
 var pomoRestCompleted = true;
 var pomoIsIdle = true;
-var pomoStartAudio = new Audio("sullivan_roar.ogg");
-var pomoRestAudio = new Audio("boo_laugh.ogg")
+var pomoStartAudio = new Audio("audio/sullivan_roar.ogg");
+var pomoRestAudio = new Audio("audio/boo_laugh.ogg")
 var SETTINGS = defaultSettings();
 
 function defaultSettings() {
@@ -134,7 +134,7 @@ function initializePomoStart(callback, completeCallback) {
   pomoCurrentState = "atWork";
   pomoWorkCompleted = false;
   pomoRestCompleted = true;
-  chrome.browserAction.setIcon({path : {"19" : "james_sullivan.png"}});
+  chrome.browserAction.setIcon({path : {"19" : "icons/james_sullivan.png"}});
   blockSites();
 }
 
@@ -144,7 +144,7 @@ function completePomoWork(){
   pomoWorkCompleted = true;
   pomoRestCompleted = false;
   pomoIsIdle = true;
-  chrome.browserAction.setIcon({path : {"19" : "boo.png"}});
+  chrome.browserAction.setIcon({path : {"19" : "icons/boo.png"}});
   clearInterval(pomoStartFunction);
   pomoRestAudio.currentTime = 3;
   pomoRestAudio.play();
@@ -159,7 +159,7 @@ function initializePomoRest(callback, completeCallback) {
   pomoCurrentState = "atRest";
   pomoWorkCompleted = false;
   pomoRestCompleted = true;
-  chrome.browserAction.setIcon({path : {"19" : "boo.png"}});
+  chrome.browserAction.setIcon({path : {"19" : "icons/boo.png"}});
   unBlockSites();
 }
 
@@ -169,7 +169,7 @@ function completePomoRest(){
   pomoWorkCompleted = false;
   pomoRestCompleted = true;
   pomoIsIdle = true;
-  chrome.browserAction.setIcon({path : {"19" : "james_sullivan.png"}});
+  chrome.browserAction.setIcon({path : {"19" : "icons/james_sullivan.png"}});
   clearInterval(pomoIntervalFunction);
   pomoStartAudio.currentTime = 3;
   pomoStartAudio.play();

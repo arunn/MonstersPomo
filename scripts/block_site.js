@@ -12,7 +12,7 @@
       overlay.style.top = 0;
 
       var img = document.createElement('img');
-      img.src = chrome.extension.getURL('james_sullivan_huge.jpg');
+      img.src = chrome.extension.getURL('icons/james_sullivan_huge.jpg');
       img.style.height = "100%";
       img.style.width = "100%";
       overlay.appendChild(img);
