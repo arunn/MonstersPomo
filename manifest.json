@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "pomodoro",
-  "description": "This is an attempt at creating a sample pomodoro extension",
+  "name": "Monster's Pomodoro",
+  "description": "This is a pomodoro extension based on Monster's theme. I do not own any of this.",
   "version": "1.0",
   "background" : {
     "scripts" : ["background.js"]
@@ -17,6 +17,7 @@
     "https://*/",
     "tabs"
   ],
+  "options_page": "options.html",
   "web_accessible_resources": [ "icons/james_sullivan_huge.jpg" ]
 
 }

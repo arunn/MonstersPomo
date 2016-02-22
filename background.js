@@ -6,7 +6,7 @@ var pomoRestCompleted = true;
 var pomoIsIdle = true;
 var pomoStartAudio = new Audio("audio/sullivan_roar.ogg");
 var pomoRestAudio = new Audio("audio/boo_laugh.ogg")
-var SETTINGS = defaultSettings();
+var SETTINGS = loadSettings();
 
 function defaultSettings() {
   return {
@@ -16,8 +16,30 @@ function defaultSettings() {
       'twitter.com',
       'tumblr.com',
       'reddit.com'
-    ]
+    ],
+    durations: { 
+      work: 25,
+      rest: 5
+    },
   }
+}
+
+function loadSettings(){
+  if(typeof localStorage['settings'] !== 'undefined') {
+    return saveSettings(JSON.parse(localStorage['settings']));
+  } else {
+    return saveSettings(defaultSettings());
+  }
+}
+
+function saveSettings(settings) {
+  localStorage['settings'] = JSON.stringify(settings);
+  return settings;
+}
+
+function setSettings(settings) {
+  SETTINGS = saveSettings(settings);
+  return settings;
 }
 
 function blockSites() {
@@ -128,13 +150,21 @@ function domainsMatch(givenValue, against) {
 
 function initializePomoStart(callback, completeCallback) {
   pomoIsIdle = false;
-  chrome.browserAction.setBadgeText({text: "25m"});
+  chrome.browserAction.setBadgeText({text: SETTINGS.durations.work + "m"});
   chrome.browserAction.setBadgeBackgroundColor({color: "#FF00FF"});
-  pomoStartFunction = setInterval(callback, 1000, completeCallback);
+  pomoStartFunction = setInterval(callback, 1000 * 60, completeCallback);
   pomoCurrentState = "atWork";
   pomoWorkCompleted = false;
   pomoRestCompleted = true;
   chrome.browserAction.setIcon({path : {"19" : "icons/james_sullivan.png"}});
+  var opt = {
+    type: "basic",
+    title: "Act serious",
+    message: "",
+    iconUrl: "icons/james_sullivan_80x80.jpg"
+  }
+  chrome.notifications.create("randomId", opt);
+
   blockSites();
 }
 
@@ -146,6 +176,13 @@ function completePomoWork(){
   pomoIsIdle = true;
   chrome.browserAction.setIcon({path : {"19" : "icons/boo.png"}});
   clearInterval(pomoStartFunction);
+  var opt = {
+    type: "basic",
+    title: "Play Time",
+    message: "",
+    iconUrl: "icons/chilling_out_80x80.jpg"
+  }
+  chrome.notifications.create("randomId", opt);
   pomoRestAudio.currentTime = 3;
   pomoRestAudio.play();
   return badgeText;
@@ -153,13 +190,21 @@ function completePomoWork(){
 
 function initializePomoRest(callback, completeCallback) {
   pomoIsIdle = false;
-  chrome.browserAction.setBadgeText({text: "5m"});
+  chrome.browserAction.setBadgeText({text: SETTINGS.durations.rest + "m"});
   chrome.browserAction.setBadgeBackgroundColor({color: "#FF00FF"});
-  pomoIntervalFunction = setInterval(callback, 1000, completeCallback);
+  pomoIntervalFunction = setInterval(callback, 1000 * 60, completeCallback);
   pomoCurrentState = "atRest";
   pomoWorkCompleted = false;
   pomoRestCompleted = true;
   chrome.browserAction.setIcon({path : {"19" : "icons/boo.png"}});
+  var opt = {
+    type: "basic",
+    title: "Chilling out",
+    message: "",
+    iconUrl: "icons/chilling_out_80x80.jpg"
+  }
+  chrome.notifications.create("randomId", opt);
+
   unBlockSites();
 }
 
@@ -171,6 +216,14 @@ function completePomoRest(){
   pomoIsIdle = true;
   chrome.browserAction.setIcon({path : {"19" : "icons/james_sullivan.png"}});
   clearInterval(pomoIntervalFunction);
+  var opt = {
+    type: "basic",
+    title: "Back to work",
+    message: "",
+    iconUrl: "icons/james_sullivan_80x80.jpg"
+  }
+  chrome.notifications.create("randomId", opt);
+
   pomoStartAudio.currentTime = 3;
   pomoStartAudio.play();
   return badgeText;

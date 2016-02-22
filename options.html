@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Monster's Pomo Options</title>
+  <style type="text/css">
+    body {
+      font-family: sans-serif;
+      color: rgb(48, 57, 66);
+      -webkit-user-select: none;
+      padding: 1.5em;
+      margin: 0;
+    }
+
+    #blocked-sites {
+      height: 16em;
+      width: 30em;
+      padding: 5px;
+      font: -webkit-control;
+    }
+
+    div {
+      margin-bottom: .7em;
+    }
+
+    #durations label {
+      font-weight: bold;
+      margin-left: 0;
+    }
+
+    label {
+      margin-left: 0.3em;
+      clear: left;
+    }
+
+    .work, .rest {
+      display: block;
+    }
+
+  </style>
+
+</head>
+<body>
+  <form id="options">
+    <div>
+      <h1>Blocked Sites</h1>
+      <textarea id="blocked-sites"></textarea>
+    </div>
+    <div id="durations">
+      <div class="work">
+        <label>
+          <span>Work Duration</span>:
+        </label>
+        <input id="work-duration" type="text" size="2" />
+      </div>
+      <div class="rest">
+        <label>
+          <span>Rest Duration</span>:
+        </label>
+        <input id="rest-duration" type="text" size="2" />
+      </div>
+    </div>
+    <button type="submit" id="save-button">SAVE</button>
+
+  </form>
+
+<script src="options.js"></script>
+</body>
+</html>
