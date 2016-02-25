@@ -24,6 +24,10 @@ function defaultSettings() {
   }
 }
 
+function disableSettings(){
+  return (pomoCurrentState == "atWork" && !pomoIsIdle) || (pomoCurrentState == "atRest" && pomoIsIdle && !pomoRestCompleted)
+}
+
 function loadSettings(){
   if(typeof localStorage['settings'] !== 'undefined') {
     return saveSettings(JSON.parse(localStorage['settings']));
@@ -194,8 +198,8 @@ function initializePomoRest(callback, completeCallback) {
   chrome.browserAction.setBadgeBackgroundColor({color: "#FF00FF"});
   pomoIntervalFunction = setInterval(callback, 1000 * 60, completeCallback);
   pomoCurrentState = "atRest";
-  pomoWorkCompleted = false;
-  pomoRestCompleted = true;
+  pomoWorkCompleted = true;
+  pomoRestCompleted = false;
   chrome.browserAction.setIcon({path : {"19" : "icons/boo.png"}});
   var opt = {
     type: "basic",

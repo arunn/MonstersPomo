@@ -10,7 +10,11 @@ var TIME_REGEX = /^([0-9]+)$/;
 
 form.onsubmit = function () {
   var durations = {}, duration, durationStr, durationMatch;
-  
+  if(background.disableSettings())
+  {
+    alert("No cheating. Get back to work");
+    return false;
+  }
   for(var key in durationElements) {
     durationMatch = durationElements[key].value.match(TIME_REGEX);
     if(durationMatch) {
