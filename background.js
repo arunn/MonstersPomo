@@ -265,7 +265,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  if((!pomoIsIdle && pomoCurrentState == "atWork") || (pomoCurrentState == "atRest" && !pomoRestCompleted)) {
+  if(disableSettings()) {
     blockSite(tab);
   }
 });
